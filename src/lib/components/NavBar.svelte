@@ -83,6 +83,7 @@
 
 			&.goback {
 				gap: 14px;
+				transform: translateX(-3px);
 
 				.icon {
 					transition: 200ms ease-out;
@@ -92,7 +93,7 @@
 					background: var(--gray-darker);
 
 					.icon {
-						transform: translateX(-3px);
+						transform: translateX(-6px);
 					}
 				}
 			}

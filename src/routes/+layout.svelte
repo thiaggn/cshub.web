@@ -46,7 +46,6 @@
 			height: 100%;
 			grid-template-columns: 180px 1fr;
 			grid-template-rows: 1fr;
-			transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 			min-height: 0;
 			min-width: 0;
 
