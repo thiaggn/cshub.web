@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --black: #0a080a;
+    --black-opaque: #0d0e0d;
+    --black-translucid: rgba(23, 23, 23, 0.5);
+
+    --gray-darker: #191c19;
+    --gray-dark: rgb(33, 32, 32);
+    --gray: #2c2d2c;
+    --gray-light: #555;
+    --gray-lighter: #767e76;
+
+
+    --purple-translucid: #121112E5;
+
+    --white: #dcf3da;
+    --white-opaque: #d2d2d2;
+    --white-translucid: rgba(255, 255, 255, 0.04);
+
+    --primary-dark: #1b1f1b;
+    --primary: #88c77f;
+    --primary-light: #9fb69c;
+
+
+
+    --red: rgba(218, 66, 66, 0.16);
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    font-family: sans-serif;
+    font-size: 10px;
+}
+
+html {
+    color-scheme: dark;
+    color: var(--white);
+    background: var(--black);
+}
+
+body {
+    font-size: 1.4rem;
+    height: 100vh;
+    position: relative;
+}
+
+.hidescroll {
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: transparent;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--gray-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+.minscroll {
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--gray-darker);
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--gray-darker);
+    }
+
+    &.scrollbarHidden::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }
+}
