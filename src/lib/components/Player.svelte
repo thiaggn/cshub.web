@@ -14,7 +14,7 @@
 
 	let volume: number = 70;
 	let paused = true;
-	let time = 0;
+	let time: number;
 
 	let timeout: number;
 
@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div class="player"
+<div class="player" class:clear={!showControls}
 	 on:mousemove={handleMouseMove}
 	 on:mouseleave={() => showControls = false}
 	 role="none">
@@ -39,7 +39,7 @@
 			 on:mouseleave={()=> showVolumeSlider=false}
 			 transition:fade={{duration: 200}}>
 
-			<Trackbar video={video}/>
+			<Trackbar video={video} bind:time/>
 			<div class="menu">
 				<div class="container">
 					<div class="item play" id="play" on:click={()=>paused = !paused} role="none">
@@ -60,7 +60,7 @@
 					<div class="item subtitles" class:inactive={!showSubtitles}
 						 on:click={() => showSubtitles = !showSubtitles} role="none"
 					>
-						<Icon name="subtitles" size={30} weight={300} color="var(--white-opaque)"/>
+						<Icon name="match_case" size={32}  color="var(--white-opaque)"/>
 					</div>
 					<div class="item expand" on:click={() => isFullscreen = !isFullscreen} role="none">
 						<Icon color="var(--white-opaque)"
@@ -80,6 +80,10 @@
 		aspect-ratio: 16 / 9;
 		background: var(--primary-dark);
 		position: relative;
+
+		&.clear {
+			cursor: none;
+		}
 
 		.thumb {
 			width: 100%;
