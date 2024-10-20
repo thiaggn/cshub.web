@@ -24,7 +24,7 @@
 		.exercises {
 			display: grid;
 			grid-gap: 8px;
-			grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
 
 			.square {
 				width: 100%;

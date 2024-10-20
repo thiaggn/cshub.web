@@ -4,22 +4,18 @@
 	import Icon from "$lib/components/Icon.svelte";
 	import {quadOut} from "svelte/easing";
 	import {fly} from "svelte/transition";
-	import {trajectory} from "$lib/stores/steps";
-	import Title from "$lib/components/Title.svelte";
 
 	export let data;
 </script>
 
-<div class="learn" in:fly={{x: 8, duration: 300, easing: quadOut}}>
+<div class="learn" in:fly={{x: 4, duration: 300, easing: quadOut}}>
 	{#each data.summaries as summary}
 		<div class="category">
 			<div class="title">{summary.title}</div>
 			<div class="modules">
 				{#each summary.modules as module}
 					<MetalBox>
-						<a class="module"
-						   href="learn/{module.id}/{module.startChapter}"
-						   on:click={() => trajectory.push("/learn")}>
+						<a class="module" href="learn/{module.id}/{module.startChapter}">
 							<Icon name={module.icon}/>
 							<div class="title">{module.title}</div>
 						</a>
@@ -39,11 +35,11 @@
 		overflow-y: scroll;
 		height: 100%;
 		width: 100%;
-		padding: 12px 32px 100px 12px;
+		padding: 16px 32px 96px 32px;
 
 		.category {
 			> .title {
-				font-weight: 600;
+				font-weight: 500;
 				font-size: 1.6rem;
 				display: flex;
 				padding-bottom: 12px;

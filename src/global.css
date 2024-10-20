@@ -1,41 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&display=swap');
 
+
 :root {
     --black: #0a080a;
     --black-opaque: #0d0e0d;
     --black-translucid: rgba(23, 23, 23, 0.5);
 
-    --gray-darker: #191c19;
-    --gray-dark: rgb(33, 32, 32);
+    --gray-dark: #191c19;
     --gray: #2c2d2c;
     --gray-light: #555;
     --gray-lighter: #767e76;
 
 
     --purple-translucid: #121112E5;
+    --blue-darker: #0c1114;
 
     --white: #dcf3da;
     --white-opaque: #d2d2d2;
     --white-translucid: rgba(255, 255, 255, 0.04);
+    --white-weak: rgba(255, 255, 255, 0.24);
+    --white-weaker: rgba(255, 255, 255, 0.1);
 
     --primary-dark: #1b1f1b;
     --primary: #88c77f;
     --primary-light: #9fb69c;
 
-
-
     --pink: rgb(157, 61, 134);
 }
 
+:root {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 10px;
+}
+
+a {
+    text-decoration: none;
+}
 
 * {
     box-sizing: border-box;
 }
 
-:root {
-    font-family: sans-serif;
-    font-size: 10px;
-}
 
 html {
     color-scheme: dark;
@@ -44,23 +49,10 @@ html {
 }
 
 body {
+    margin: 0;
     font-size: 1.4rem;
     height: 100vh;
     position: relative;
-}
-
-.hidescroll {
-    &::-webkit-scrollbar {
-        width: 0;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-        background-color: transparent;
-    }
 }
 
 ::-webkit-scrollbar {
@@ -72,7 +64,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--gray-dark);
+    background-color: var(--primary-dark);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -89,12 +81,12 @@ body {
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: var(--gray-darker);
+        background-color: var(--gray-dark);
         border-radius: 10px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-        background-color: var(--gray-darker);
+        background-color: var(--gray-dark);
     }
 
     &.scrollbarHidden::-webkit-scrollbar-thumb {

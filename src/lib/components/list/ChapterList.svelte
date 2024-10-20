@@ -60,7 +60,7 @@
 			}
 
 			&:not(:last-of-type) {
-				border-bottom: 1px solid var(--gray-darker);
+				border-bottom: 1px solid var(--gray-dark);
 			}
 
 			.index {

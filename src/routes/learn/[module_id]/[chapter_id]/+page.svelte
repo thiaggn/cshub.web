@@ -19,7 +19,7 @@
 	}
 </script>
 
-<div class="module" in:fly={{x: 8, duration: 300, easing: quadOut}}>
+<div class="module" in:fly={{x: 4, duration: 300, easing: quadOut}}>
 	<div class="side">
 		<ChapterList module={data.module}/>
 	</div>
@@ -44,9 +44,10 @@
 		display: grid;
 		grid-template-columns: 300px 1fr;
 		gap: 12px;
+		padding-left: 16px;
 
 		.side {
-			padding-top: 24px;
+			padding-top: 16px;
 			flex-shrink: 0;
 			border-right: 1px solid var(--dark);
 			width: 300px;
@@ -55,10 +56,10 @@
 		}
 
 		.main {
-			padding-top: 24px;
+			padding-top: 16px;
 			width: 100%;
 			padding-bottom: 32px;
-			padding-right: 32px;
+			padding-right: 48px;
 			height: 100%;
 			overflow-y: scroll;
 

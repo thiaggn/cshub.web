@@ -16,7 +16,7 @@ import Icon from "$lib/components/Icon.svelte";
 		background: var(--black-opaque);
 		border: 1px solid var(--gray);
 		height: 40px;
-		border-radius: 8px;
+		border-radius: 32px;
 		padding-left: 12px;
 		gap: 8px;
 		max-width: 600px;
@@ -26,9 +26,9 @@ import Icon from "$lib/components/Icon.svelte";
 		input {
 			border: none;
 			background: transparent;
-			font-family: sans-serif;
 			height: 100%;
 			width: 100%;
+			font-family: 'Segoe UI', sans-serif;
 
 			&:active, &:focus {
 				outline: none;

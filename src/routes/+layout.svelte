@@ -22,6 +22,7 @@
 
 <style lang="scss">
 	.app {
+		overflow: hidden;
 		position: relative;
 		width: 100%;
 		height: 100vh;
@@ -31,17 +32,16 @@
 
 		&:not(.expanded) {
 			.wrapper {
-				grid-template-columns: 44px 1fr;
-			}
-		}
+				grid-template-columns: 56px 1fr;
 
-		.topbar {
-			border-bottom: 1px solid var(--gray-darker);
+				.sidebar {
+					border-color: transparent;
+				}
+			}
 		}
 
 		.wrapper {
 			display: grid;
-			grid-gap: 12px;
 			padding-left: 12px;
 			height: 100%;
 			grid-template-columns: 180px 1fr;
@@ -51,6 +51,8 @@
 
 			.sidebar {
 				padding-top: 12px;
+				padding-right: 12px;
+				border-right: 1px solid var(--gray-dark);
 			}
 
 			.view {

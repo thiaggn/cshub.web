@@ -1,36 +1,37 @@
 <script lang="ts">
 	import Icon from "$lib/components/Icon.svelte";
 	import {page} from "$app/stores";
-	import {destinations, steps, trajectory} from "$lib/stores/steps";
 	import {slide} from "svelte/transition";
-	import {fade} from "svelte/transition";
 	import {backOut, cubicOut} from "svelte/easing";
-	import {onMount} from "svelte";
 	import {sidebar} from "$lib/stores/sidebar";
+	import {destinations} from "$lib/constants";
 
+	let allowGoBack = true;
 	$: expanded = !$sidebar.forceMinimize && $sidebar.expanded;
 
 	$: {
-		let atRootView = destinations.find(d => d.to == $page.url.pathname)
-		if (atRootView) {
-			trajectory.clear()
-		}
-
 		$sidebar.forceMinimize = $page.url.pathname.startsWith("/watch")
 	}
 
-	onMount(function () {
-		let atRootView = destinations.find(dest => dest.to === $page.url.pathname)
 
-		if (!atRootView) {
-			trajectory.push("/learn")
+	$: {
+		let atBaseRoute = false;
+
+		for(const dest of destinations) {
+			if($page.url.pathname == dest.to) {
+				allowGoBack = false;
+				atBaseRoute = true
+			}
 		}
-	})
+
+		allowGoBack = !atBaseRoute
+
+	}
 </script>
 
 <div class="navbar" class:expanded>
-	{#if $steps > 0}
-		<div class="goback button" on:click={trajectory.back} role="none"
+	{#if allowGoBack}
+		<div class="goback item" on:click={() => history.back()} role="none"
 			 transition:slide={ {duration: 500, easing: backOut, axis: "y"}}>
 			<div class="icon">
 				<Icon name="chevron_left" size={32}/>
@@ -43,7 +44,7 @@
 
 	{#each destinations as dest, i}
 		{@const active = $page.url.pathname === dest.to}
-		<a href={dest.to} class="dest button" class:active>
+		<a href={dest.to} class="dest item" class:active>
 			<div class="icon">
 				<Icon name={dest.icon}
 					  color="var(--primary)"
@@ -54,7 +55,7 @@
 			</div>
 
 			{#if expanded}
-				<div class="label" transition:fade={{duration: 200, easing: cubicOut}} >{dest.label}</div>
+				<div class="label">{dest.label}</div>
 			{/if}
 		</a>
 	{/each}
@@ -69,7 +70,7 @@
 		gap: 4px;
 
 
-		.button {
+		.item {
 			height: 45px;
 			display: flex;
 			width: 100%;
@@ -83,14 +84,14 @@
 
 			&.goback {
 				gap: 14px;
-				transform: translateX(-3px);
 
 				.icon {
+					transform: translateX(-3px);
 					transition: 200ms ease-out;
 				}
 
 				&:hover {
-					background: var(--gray-darker);
+					background: var(--gray-dark);
 
 					.icon {
 						transform: translateX(-6px);
@@ -100,7 +101,7 @@
 
 			&.dest {
 				&.active {
-					background: var(--gray-darker);
+					background: var(--gray-dark);
 				}
 
 				&:not(.active):hover {

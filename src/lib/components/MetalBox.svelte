@@ -19,7 +19,7 @@
 
 <style lang="scss">
 	.box {
-		background: var(--gray-darker);
+		background: var(--gray-dark);
 		border-radius: 2px;
 		position: relative;
 		overflow: hidden;

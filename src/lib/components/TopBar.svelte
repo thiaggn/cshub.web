@@ -10,7 +10,7 @@
 
 <div class="topbar">
 	<div class="side">
-		<div class="expand" on:click={toggleSidebar} role="none">
+		<div class="expand" class:inactive={$sidebar.forceMinimize} on:click={toggleSidebar} role="none">
 			<div class="circ">
 				<Icon name="menu" size={24}/>
 			</div>
@@ -43,6 +43,9 @@
 		align-items: center;
 		width: 100%;
 		height: 100%;
+		border-bottom: 1px solid transparent;
+		border-bottom-color: var(--gray-dark);
+
 
 		.side {
 			height: 100%;
@@ -57,15 +60,20 @@
 				height: 100%;
 				width: fit-content;
 				margin: 0 12px;
-
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				transition: 200ms;
+
+				&.inactive {
+					cursor: default;
+					filter: brightness(0.5);
+				}
 
 
 				&:hover {
 					.circ {
-						background-color: var(--gray-darker)
+						background-color: var(--gray-dark)
 					}
 				}
 

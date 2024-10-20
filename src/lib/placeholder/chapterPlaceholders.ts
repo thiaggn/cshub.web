@@ -5,7 +5,7 @@ export const ChapterPlaceholders: Chapter[] = [
         title: "Introdução",
         id: "dWai4",
         videos: [
-            { id: "a1B2C", title: "História da Arquitetura de Computadores", tag: 'A', length: 900 },
+            { id: "a1B2C", title: "História da Arquitetura de Computadores", tag: 'A', length: 900, progress: 330},
             { id: "D3e4F", title: "Componentes Básicos", tag: 'B', length: 1080 },
             { id: "G5h6I", title: "Funcionamento Geral de um Computador", tag: 'C', length: 960 },
             { id: "j7K8L", title: "Tipos de Arquitetura", tag: 'D', length: 1260 },

@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type {Chapter} from "$lib/types";
 	import Title from "$lib/components/Title.svelte";
-	import {trajectory} from "$lib/stores/steps";
-	import {page} from "$app/stores";
 	import {formatTime} from "$lib/utils";
 
 	export let chapter: Chapter;
@@ -12,10 +10,17 @@
 	<Title>{chapter.title}</Title>
 	<div class="lessons">
 		{#each chapter.videos as video}
-			<a class="player" href="/watch/{video.id}" on:click={() => trajectory.push($page.url.pathname)}>
+			<a class="player" href="/watch/{video.id}">
 				<div class="thumb">
 					<span class="detail tag">{video.tag}</span>
-					<span class="detail length">{formatTime(video.length)}</span>
+					<div class="wrapper">
+						<span class="detail length">{formatTime(video.length)}</span>
+						{#if video.progress}
+							<div class="progress">
+								<div class="line" style:--progress={video.progress / video.length}></div>
+							</div>
+						{/if}
+					</div>
 				</div>
 				<div class="title">{video.title}</div>
 			</a>
@@ -38,8 +43,9 @@
 			cursor: pointer;
 
 			.thumb {
+				overflow: hidden;
 				color: var(--white-opaque);
-				background: linear-gradient(45deg, var(--gray-light), var(--primary-dark));
+				background: linear-gradient(45deg, var(--black-opaque), var(--primary-dark));
 				width: 100%;
 				aspect-ratio: 16 / 9;
 				border-radius: 4px;
@@ -56,15 +62,38 @@
 					background: rgba(0, 0, 0, 0.5);
 					padding: 1px 4px;
 					border-radius: 2px;
-					position: absolute;
 				}
 
-				.length {
-					bottom: 4px;
-					right: 4px;
+				.wrapper {
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-end;
+					align-items: flex-end;
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					width: 100%;
+
+					.length {
+						margin: 4px;
+					}
+
+					.progress {
+						width: 100%;
+						height: 4px;
+						background: var(--black-opaque);
+
+						.line {
+							height: 100%;
+							width: calc(100% * var(--progress));
+							background: var(--primary);
+						}
+					}
 				}
+
 
 				.tag {
+					position: absolute;
 					display: flex;
 					align-items: center;
 					justify-content: center;

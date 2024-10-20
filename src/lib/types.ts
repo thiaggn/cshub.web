@@ -13,6 +13,11 @@ export type Video = {
     tag: string;
     moduleTitle: string;
     parts: Part[];
+    next?: {
+        id: string;
+        title: string;
+        length: number;
+    }
 }
 
 export type Chapter = {
@@ -23,6 +28,7 @@ export type Chapter = {
         length: number;
         title: string
         tag: string;
+        progress?: number;
     }[]
 }
 
