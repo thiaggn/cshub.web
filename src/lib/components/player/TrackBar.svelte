@@ -34,16 +34,6 @@
 		}
 	}
 
-	let interval = setInterval(function updateTime() {
-		if (!paused && !dragging && $player.time < video.length) {
-			$player.time += 1;
-		}
-	}, 1000)
-
-	onDestroy(function stopTimer() {
-		clearInterval(interval)
-	})
-
 
 	function updateAim(event: MouseEvent) {
 		const rect = trackbar.getBoundingClientRect();
@@ -97,12 +87,18 @@
 		{/each}
 	</div>
 	<div class="bullettrack">
-		<div class="bullet" class:expanded={expandBullet} transition:scale></div>
+		{#if bulletVisible}
+			<div class="bullet"
+				 class:expanded={expandBullet}
+				 transition:scale={{duration: 200}}>
+			</div>
+		{/if}
 	</div>
 </div>
 
 <style lang="scss">
 	.wrapper {
+		width: 100%;
 		position: relative;
 		height: 20px;
 		display: flex;
@@ -110,9 +106,9 @@
 		cursor: pointer;
 
 		.trackbar {
+			gap: 3px;
 			height: 18px;
 			display: flex;
-			gap: 3px;
 			position: absolute;
 			width: 100%;
 			user-select: none;
@@ -126,12 +122,12 @@
 			align-items: center;
 
 			.bullet {
-				transform: translateX(-50%);
+				translate: -50%;
 				position: absolute;
 				left: calc(var(--watched) * 100%);
 				z-index: 3;
 				border-radius: 100%;
-				height: 10px;
+				height: 12px;
 				aspect-ratio: 1 / 1;
 				background: var(--primary-saturated);
 				pointer-events: none;

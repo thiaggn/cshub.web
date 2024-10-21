@@ -7,7 +7,7 @@ export const VideosPlaceholder: Video[] = [
         title: "História da Arquitetura de Computadores",
         moduleTitle: "Arquitetura de Computadores",
         tag: 'A',
-        length: 900,
+        length: 86,
         next: {
             id: "D3e4F",
             title: "Componentes Básicos",
@@ -15,10 +15,10 @@ export const VideosPlaceholder: Video[] = [
         },
 
         parts: [
-            {title: "Introdução", start: 0, end: 120, id: 'sidfj'},
-            {title: "Primeiros Computadores", start: 121, end: 300, id: '23492'},
-            {title: "Evolução da Arquitetura", start: 301, end: 600, id: 'isfdj'},
-            {title: "Arquitetura Moderna", start: 601, end: 900, id: 'wed9i'},
+            {title: "Piper cozinha uma granada", start: 0, end: 27, id: 'sidfj'},
+            {title: "Piper sai de sua casa", start: 27, end: 35, id: '23492'},
+            {title: "Piper estoura seus amigos", start: 35, end: 49, id: 'isfdj'},
+            {title: "Piper atira nos seus amigos", start: 49, end: 86, id: 'wed9i'},
         ]
     },
     {

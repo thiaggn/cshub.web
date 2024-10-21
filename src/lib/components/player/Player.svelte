@@ -3,12 +3,13 @@
 	import type {Video} from "$lib/types";
 	import Icon from "$lib/components/Icon.svelte";
 	import TrackBar from "$lib/components/player/TrackBar.svelte";
-	import { formatTime } from "$lib/utils";
+	import {formatTime} from "$lib/utils";
 	import VolumeSlider from "$lib/components/VolumeSlider.svelte";
 
 	export let video: Video;
 
 	let playerDiv: HTMLDivElement;
+	let videoElement: HTMLVideoElement;
 	let volume: number = 70;
 
 	let paused = true;
@@ -17,13 +18,21 @@
 	let seeFullscreen = false;
 	let seeVolumeSlider = false;
 	let seeControls = true;
+	let currentTime: number;
 
-	$: if($player.time >= video.length && !paused) {
+	$: $player.time = Math.trunc(currentTime)
+
+	$: if ($player.time >= video.length && !paused) {
 		paused = true
 	}
 
+	$: if(videoElement) {
+		if(!paused) videoElement.play()
+		else videoElement.pause()
+	}
+
 	function hideControls() {
-		seeControls = false;
+		if(!paused) seeControls = false;
 	}
 
 	function showControls() {
@@ -61,20 +70,53 @@
 			showControls();
 		}
 	}
+
+	let clickTimeout: number | null = null;
+	let clickCount = 0;
+
+	function handlePlayerClick() {
+		clickCount++;
+
+		if (clickTimeout !== null) {
+			clearTimeout(clickTimeout);
+		}
+
+		clickTimeout = setTimeout(() => {
+			if (clickCount === 1) {
+				togglePause();
+			} else if (clickCount === 2) {
+				toggleFullscreen()
+			}
+
+			clickCount = 0;
+		}, 250);
+	}
+
+
 </script>
 
 <div class="player" class:clear={!seeControls}
 	 on:mousemove={showControls}
+	 on:mouseleave={hideControls}
 	 bind:this={playerDiv}
 	 role="none">
 
-	<img src="ex.jpg" alt="thumb" class="thumb">
+	<video class="video"
+		   bind:this={videoElement} bind:paused bind:currentTime={$player.time}>
+		<track kind="captions">
+		<source src="video.mp4" type="video/mp4">
+	</video>
+
 	<div class="control" class:visible={seeControls} role="none" on:mouseleave={hideVolumeSlider}>
 		<TrackBar video={video} paused={paused}/>
 		<div class="menu">
 			<div class="container">
 				<div class="item play" id="play" role="none" on:click={togglePause}>
-					<Icon name={paused ? "play_arrow" : "pause"} size={28} color="var(--white-opaque)"/>
+					{#if paused}
+						<Icon name="play_arrow" size={28} color="var(--white-opaque)"/>
+					{:else}
+						<Icon name="pause" size={28} weight={300} color="var(--white-opaque)"/>
+					{/if}
 				</div>
 
 				<div class="item volume" on:mousemove={unhideVolumeSlider} role="none">
@@ -89,7 +131,7 @@
 
 			<div class="container">
 				<div class="item speed">
-					<Icon name="fast_forward" size={30} color="var(--white-opaque)"/>
+					<Icon name="fast_forward" weight={300} size={30} color="var(--white-opaque)"/>
 				</div>
 				<div class="item subtitles" class:inactive={!seeSubtitles}
 					 on:click={() => seeSubtitles = !seeSubtitles} role="none">
@@ -97,7 +139,7 @@
 				</div>
 				<div class="item expand" on:click={toggleFullscreen} role="none">
 					<Icon color="var(--white-opaque)"
-						  name={seeFullscreen ? "close_fullscreen" : "open_in_full"} />
+						  name={seeFullscreen ? "close_fullscreen" : "open_in_full"}/>
 				</div>
 			</div>
 		</div>
@@ -112,6 +154,11 @@
 		aspect-ratio: 16 / 9;
 		background: var(--primary-dark);
 		position: relative;
+
+		.video {
+			height: 100%;
+			width: 100%;
+		}
 
 		&.clear {
 			cursor: none;
@@ -129,7 +176,7 @@
 			position: absolute;
 			bottom: 0;
 			width: 100%;
-			background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+			background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 50%, transparent);
 			opacity: 0;
 			transition: opacity 400ms;
 			pointer-events: none;
@@ -179,6 +226,7 @@
 							border-radius: 4px;
 
 							&.length {
+								backdrop-filter: none;
 								border: none;
 							}
 						}
