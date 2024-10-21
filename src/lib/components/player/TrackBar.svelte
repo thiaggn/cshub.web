@@ -16,19 +16,23 @@
 	let expandBullet = false;
 	let bulletVisible = false;
 
+	$: if (aim != 0) {
+		expandBullet = video.parts.some(part => {
+			const inprogress = $player.time >= part.start && $player.time <= part.end;
+			const aimed = aim >= part.start && aim <= part.end;
+			return aimed && inprogress;
+		});
+
+	} else expandBullet = false
 
 	$: for (let p of video.parts) {
-		const active = $player.time >= p.start && $player.time <= p.end;
+		const inprogress = $player.time >= p.start && $player.time <= p.end;
 
-		if (active && $player.part != p) {
+		if (inprogress && $player.part != p) {
 			$player.part = p;
 			break;
 		}
-
-		// Verificar se o aim está dentro do intervalo ativo
-		expandBullet = aim >= p.start && aim <= p.end;
 	}
-
 
 	let interval = setInterval(function updateTime() {
 		if (!paused && !dragging && $player.time < video.length) {
