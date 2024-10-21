@@ -3,6 +3,7 @@ import type {Video} from "$lib/types";
 export const VideosPlaceholder: Video[] = [
     {
         id: "a1B2C",
+        progress: 330,
         title: "História da Arquitetura de Computadores",
         moduleTitle: "Arquitetura de Computadores",
         tag: 'A',
@@ -14,10 +15,10 @@ export const VideosPlaceholder: Video[] = [
         },
 
         parts: [
-            {title: "Introdução", start: 0, end: 120},
-            {title: "Primeiros Computadores", start: 121, end: 300},
-            {title: "Evolução da Arquitetura", start: 301, end: 600},
-            {title: "Arquitetura Moderna", start: 601, end: 900},
+            {title: "Introdução", start: 0, end: 120, id: 'sidfj'},
+            {title: "Primeiros Computadores", start: 121, end: 300, id: '23492'},
+            {title: "Evolução da Arquitetura", start: 301, end: 600, id: 'isfdj'},
+            {title: "Arquitetura Moderna", start: 601, end: 900, id: 'wed9i'},
         ]
     },
     {
@@ -33,10 +34,10 @@ export const VideosPlaceholder: Video[] = [
         },
 
         parts: [
-            {title: "Visão Geral", start: 0, end: 180},
-            {title: "Processador", start: 181, end: 400},
-            {title: "Memória RAM", start: 401, end: 720},
-            {title: "Dispositivos de Armazenamento", start: 721, end: 1080}
+            {title: "Visão Geral", start: 0, end: 180, id: 'oqire'},
+            {title: "Processador", start: 181, end: 400, id: '9eiwd'},
+            {title: "Memória RAM", start: 401, end: 720, id: 'osdfj'},
+            {title: "Dispositivos de Armazenamento", start: 721, end: 1080, id:'ofdsf'}
         ]
     },
     {
@@ -52,10 +53,10 @@ export const VideosPlaceholder: Video[] = [
         },
 
         parts: [
-            {title: "Entrada e Saída", start: 0, end: 200},
-            {title: "Processamento de Dados", start: 201, end: 480},
-            {title: "Unidade de Controle", start: 481, end: 720},
-            {title: "Ciclo de Instrução", start: 721, end: 960}
+            {title: "Entrada e Saída", start: 0, end: 200, id: 'okdfs'},
+            {title: "Processamento de Dados", start: 201, end: 480, id: 'odsap'},
+            {title: "Unidade de Controle", start: 481, end: 720, id: 'kfs00'},
+            {title: "Ciclo de Instrução", start: 721, end: 960, id:'odsfp'}
         ]
     },
     {
@@ -72,10 +73,10 @@ export const VideosPlaceholder: Video[] = [
         },
 
         parts: [
-            {title: "Arquitetura CISC", start: 0, end: 300},
-            {title: "Arquitetura RISC", start: 301, end: 600},
-            {title: "Arquitetura EPIC", start: 601, end: 900},
-            {title: "Comparação entre Arquiteturas", start: 901, end: 1260}
+            {title: "Arquitetura CISC", start: 0, end: 300, id: 'sdfs0'},
+            {title: "Arquitetura RISC", start: 301, end: 600, id: 'esddf'},
+            {title: "Arquitetura EPIC", start: 601, end: 900, id: '0sdf3'},
+            {title: "Comparação entre Arquiteturas", start: 901, end: 1260, id: 'kmod3'}
         ]
     },
     {
@@ -85,10 +86,10 @@ export const VideosPlaceholder: Video[] = [
         moduleTitle: "Arquitetura de Computadores",
         tag: 'E',
         parts: [
-            {title: "Introdução à Arquitetura Von Neumann", start: 0, end: 240},
-            {title: "Características Principais", start: 241, end: 600},
-            {title: "Ciclo de Execução", start: 601, end: 960},
-            {title: "Vantagens e Limitações", start: 961, end: 1320}
+            {title: "Introdução à Arquitetura Von Neumann", start: 0, end: 240, id: 'Yeld0'},
+            {title: "Características Principais", start: 241, end: 600, id: 'oroR3'},
+            {title: "Ciclo de Execução", start: 601, end: 960, id: 'Ssdf4'},
+            {title: "Vantagens e Limitações", start: 961, end: 1320, id: 'pare4'}
         ]
     }
 ]

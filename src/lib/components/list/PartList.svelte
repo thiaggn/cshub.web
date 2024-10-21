@@ -1,13 +1,19 @@
 <script lang="ts">
-	import type {Video} from "$lib/types";
+	import type {Part, Video} from "$lib/types";
 	import {formatTime} from "$lib/utils";
-
+	import {player} from "$lib/stores/player";
 	export let video: Video;
+
+	function selectPart(p: Part) {
+		$player.part = p;
+		$player.time = p.start;
+	}
 </script>
 
 <div class="list">
-	{#each video.parts as part}
-		<div class="part">
+	{#each video.parts as part, i}
+		<div class="part" class:active={$player.part.id === part.id}
+			 role="none" on:click={() => selectPart(part)}>
 			<div class="description">
 				<div class="title">{part.title}</div>
 				<div class="timestamp">{formatTime(part.start)}</div>
@@ -27,10 +33,15 @@
 			width: 100%;
 			display: flex;
 			align-items: center;
-			transition: color 500ms;
+			transition: 500ms;
 			cursor: pointer;
 			color: var(--gray-lighter);
 			flex-shrink: 0;
+
+
+			&.active {
+				color: var(--primary);
+			}
 
 			&:not(.active):hover {
 				color: var(--white-opaque);

@@ -1,12 +1,18 @@
 <script lang="ts">
+	import {player} from "$lib/stores/player";
 	import PartList from "$lib/components/list/PartList.svelte";
 	import {quadOut} from "svelte/easing";
 	import {fly} from "svelte/transition";
-	import Player from "$lib/components/Player.svelte";
+	import Player from "$lib/components/player/Player.svelte";
 	import Icon from "$lib/components/Icon.svelte";
-	import {formatTime} from "$lib/utils";
+	import NextVideo from "$lib/components/NextVideo.svelte";
 
 	export let data;
+
+	$: if(data.video) {
+		$player.part = data.video.parts[0]
+		$player.time = 0;
+	}
 </script>
 
 <div class="watch" in:fly={{x: 4, duration: 300, easing: quadOut}}>
@@ -29,29 +35,12 @@
 						<span>Favoritar</span>
 					</div>
 				</div>
-
 			</div>
 		</div>
 		<div class="description"></div>
 	</main>
 	<aside>
-		<div class="next">
-			<div class="title">Próximo vídeo</div>
-			{#if data.video.next !== undefined}
-				<a class="container" href="/watch/{data.video.next.id}">
-					<div class="thumb">
-					</div>
-					<div class="wrapper">
-						<div class="title">{data.video.next.title}</div>
-						<div class="length">{formatTime(data.video.next.length)}</div>
-					</div>
-				</a>
-			{:else}
-				<div class="container empty">
-					<div class="warn">Esse é o último vídeo do capítulo.</div>
-				</div>
-			{/if}
-		</div>
+		<NextVideo video={data.video}/>
 		<div>
 			<div class="title">Partes</div>
 			<PartList video={data.video}/>
@@ -167,67 +156,6 @@
 			.title {
 				font-size: 1.4rem;
 				font-weight: 600;
-			}
-
-
-			.next {
-				display: flex;
-				flex-direction: column;
-				gap: 8px;
-
-
-				.container {
-					overflow: hidden;
-					display: flex;
-					border-radius: 4px;
-					height: 86px;
-					border: 1px solid var(--gray-dark);
-					color: var(--gray-lighter);
-					transition: 200ms;
-
-					&.empty {
-						justify-content: center;
-						padding: 16px;
-						display: flex;
-						align-items: center;
-					}
-
-					&:hover {
-						.wrapper .title {
-							color: var(--white-opaque);
-						}
-					}
-
-					.wrapper {
-						padding: 10px;
-						width: 100%;
-
-						.title {
-							transition: 200ms;
-							font-size: 1.3rem;
-							margin-bottom: 8px;
-						}
-
-						.length {
-							width: fit-content;
-							padding: 2px 4px;
-							border-radius: 2px;
-							font-size: 1.2rem;
-							bottom: 4px;
-							right: 4px;
-							background: var(--purple-translucid);
-						}
-
-					}
-
-					.thumb {
-						height: 100%;
-						aspect-ratio: 16 / 9;
-						position: relative;
-						background: black;
-					}
-				}
-
 			}
 		}
 	}

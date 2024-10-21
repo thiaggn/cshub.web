@@ -4,13 +4,14 @@
 	import {slide} from "svelte/transition";
 	import Icon from "$lib/components/Icon.svelte";
 
-	export let value: number = 70;
-	export let expanded: boolean = false;
+	export let volume: number = 70;
+	export let expanded: boolean;
 	let muted = false;
 
+
 	function handleClick() {
-		if(value == 0) {
-			value = 50
+		if(volume == 0) {
+			volume = 50
 			muted = false
 		}
 		else muted = !muted
@@ -19,8 +20,8 @@
 
 
 <div class="volume" role="none">
-	<div class="ico" class:offset={value < 50 && value !== 0} on:click={handleClick} role="none">
-		<Icon name={value > 0 ? (value < 50 ? "volume_down_alt" : "volume_up") : "volume_off"}
+	<div class="ico" class:offset={volume < 50 && volume !== 0} on:click={handleClick} role="none">
+		<Icon name={volume > 0 ? (volume < 50 ? "volume_down_alt" : "volume_up") : "volume_off"}
 			  size={24} color="var(--white-opaque)"/>
 	</div>
 	{#if expanded}
@@ -28,7 +29,7 @@
 			{#if muted}
 				<Slider value={0}/>
 			{:else}
-				<Slider bind:value={value}/>
+				<Slider bind:value={volume}/>
 			{/if}
 		</div>
 	{/if}

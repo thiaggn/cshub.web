@@ -1,6 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 
 export type Part = {
+    id: string;
     title: string;
     start: number;
     end: number;
@@ -11,6 +12,7 @@ export type Video = {
     length: number;
     title: string
     tag: string;
+    progress?: number;
     moduleTitle: string;
     parts: Part[];
     next?: {
