@@ -15,10 +15,10 @@ export const VideosPlaceholder: Video[] = [
         },
 
         parts: [
-            {title: "Piper cozinha uma granada", start: 0, end: 27, id: 'sidfj'},
-            {title: "Piper sai de sua casa", start: 27, end: 35, id: '23492'},
-            {title: "Piper estoura seus amigos", start: 35, end: 49, id: 'isfdj'},
-            {title: "Piper atira nos seus amigos", start: 49, end: 86, id: 'wed9i'},
+            {title: "Alan Turing", start: 0, end: 27, id: 'sidfj'},
+            {title: "Arquitetura de Von Neumann", start: 27, end: 35, id: '23492'},
+            {title: "Os primeiros computadores", start: 35, end: 49, id: 'isfdj'},
+            {title: "Computadores hoje em dia", start: 49, end: 86, id: 'wed9i'},
         ]
     },
     {
