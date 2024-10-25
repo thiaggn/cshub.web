@@ -1,5 +1,18 @@
 // place files you want to import through the `$lib` alias in this folder.
 
+export type FullScreenEvent = {
+    toggle: {
+        fullscreen: boolean
+    }
+}
+
+export enum Velocity {
+    Faster = 1.5,
+    Fast = 1.25,
+    Normal = 1,
+    Slow = 0.75,
+}
+
 export type Part = {
     id: string;
     title: string;
