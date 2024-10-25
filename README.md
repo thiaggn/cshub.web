@@ -1,38 +1,13 @@
-# create-svelte
+## cshub.web
+cshub é uma plataforma de estudos sobre computação. Esse repositório contém a página web do cshub, escrito em 
+Svelte. 
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A página web é uma single-page application (SPA), e inicialmente comecei a desenvolvê-la em ReactJS. No entanto, 
+reescrevi o projeto em SvelteJS por ser muito menos complexo que o React.
 
-## Creating a project
 
-If you're seeing this, you've probably already done this step. Congrats!
+![img.png](image/img.png)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+![img_1.png](image/img_1.png)
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+![img_2.png](image/img_2.png)
