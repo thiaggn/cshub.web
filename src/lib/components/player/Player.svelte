@@ -1,38 +1,44 @@
 <script lang="ts">
 	import {player} from "$lib/stores/player";
-	import type {Video} from "$lib/types";
-	import Icon from "$lib/components/Icon.svelte";
-	import TrackBar from "$lib/components/player/TrackBar.svelte";
-	import {formatTime} from "$lib/utils";
-	import VolumeSlider from "$lib/components/VolumeSlider.svelte";
+	import {Velocity, type Video} from "$lib/types";
+	import VolumeSlider from "$lib/components/player/menu/VolumeSlider.svelte";
+	import PauseToggleButton from "$lib/components/player/menu/PauseToggleButton.svelte";
+	import Timestamp from "$lib/components/player/menu/Timestamp.svelte";
+	import VelocityMenu from "$lib/components/player/menu/VelocityMenu.svelte";
+	import SubtitleToggleButton from "$lib/components/player/menu/SubtitleToggleButton.svelte";
+	import FullscreenToggleButton from "$lib/components/player/menu/FullscreenToggleButton.svelte";
+	import TrackBar from "$lib/components/player/trackbar/TrackBar.svelte";
+	import Subtitles from "$lib/components/player/Subtitles.svelte";
+	import {slide} from "svelte/transition";
+	import {cubicOut} from "svelte/easing";
+	import {onMount} from "svelte";
 
 	export let video: Video;
 
 	let playerDiv: HTMLDivElement;
+	let timeout: ReturnType<typeof setTimeout>;
 	let videoElement: HTMLVideoElement;
-	let volume: number = 70;
+
+	let volume: number;
+	let velocity: number = Velocity.Normal;
 
 	let paused = true;
-	let timeout: ReturnType<typeof setTimeout>;
-	let seeSubtitles = true;
-	let seeFullscreen = false;
+	let seeFullscreen: boolean;
 	let seeVolumeSlider = false;
+	let seeSubtitles = true;
 	let seeControls = true;
-	let currentTime: number;
-
-	$: $player.time = Math.trunc(currentTime)
 
 	$: if ($player.time >= video.length && !paused) {
 		paused = true
 	}
 
-	$: if(videoElement) {
-		if(!paused) videoElement.play()
+	$: if (videoElement) {
+		if (!paused) videoElement.play()
 		else videoElement.pause()
 	}
 
 	function hideControls() {
-		if(!paused) seeControls = false;
+		if (!paused) seeControls = false;
 	}
 
 	function showControls() {
@@ -44,23 +50,22 @@
 		}
 	}
 
-	function unhideVolumeSlider() {
-		seeVolumeSlider = true;
-	}
-
 	function hideVolumeSlider() {
 		seeVolumeSlider = false;
 	}
 
-	function toggleFullscreen() {
+	function toggleFullscreen(isFullscreen: boolean) {
 		if (playerDiv) {
-			if (seeFullscreen) {
+			if (isFullscreen) {
 				document.exitFullscreen();
 			} else {
 				playerDiv.requestFullscreen();
 			}
 		}
-		seeFullscreen = !seeFullscreen;
+	}
+
+	function handleFullscreenToggle(e: CustomEvent) {
+		toggleFullscreen(e.detail.fullscreen)
 	}
 
 	function togglePause() {
@@ -74,7 +79,7 @@
 	let clickTimeout: number | null = null;
 	let clickCount = 0;
 
-	function handlePlayerClick() {
+	function handleClick() {
 		clickCount++;
 
 		if (clickTimeout !== null) {
@@ -85,61 +90,62 @@
 			if (clickCount === 1) {
 				togglePause();
 			} else if (clickCount === 2) {
-				toggleFullscreen()
+				toggleFullscreen(seeFullscreen)
+				seeFullscreen = !seeFullscreen
 			}
 
 			clickCount = 0;
 		}, 250);
 	}
 
+	let prev = 0;
+	function render(current: number) {
+		if(!paused) {
+			$player.time += (current - prev) / 1000;
+		}
 
+		prev = current;
+		requestAnimationFrame(render)
+	}
+
+	let renderHandle: number;
+
+	onMount(function startRendering() {
+		renderHandle = window.requestAnimationFrame(render)
+
+		return () => {
+			cancelAnimationFrame(renderHandle)
+		}
+	})
 </script>
 
 <div class="player" class:clear={!seeControls}
+	 bind:this={playerDiv} role="none"
 	 on:mousemove={showControls}
 	 on:mouseleave={hideControls}
-	 bind:this={playerDiv}
-	 role="none">
+>
+	<div class="view" on:click={handleClick} role="none"></div>
 
-	<video class="video"
-		   bind:this={videoElement} bind:paused bind:currentTime={$player.time}>
-		<track kind="captions">
-		<source src="video.mp4" type="video/mp4">
-	</video>
-
-	<div class="control" class:visible={seeControls} role="none" on:mouseleave={hideVolumeSlider}>
-		<TrackBar video={video} paused={paused}/>
-		<div class="menu">
-			<div class="container">
-				<div class="item play" id="play" role="none" on:click={togglePause}>
-					{#if paused}
-						<Icon name="play_arrow" size={28} color="var(--white-opaque)"/>
-					{:else}
-						<Icon name="pause" size={28} weight={300} color="var(--white-opaque)"/>
-					{/if}
-				</div>
-
-				<div class="item volume" on:mousemove={unhideVolumeSlider} role="none">
-					<VolumeSlider bind:volume expanded={seeVolumeSlider}/>
-				</div>
-
-				<div class="item time">
-					<span class="container">{formatTime($player.time)}</span>
-					<span class="container length">{formatTime(video.length)}</span>
-				</div>
+	<div class="inferior">
+		{#if seeSubtitles}
+			<div class="subtitles" class:padded={!seeControls}
+			transition:slide={{duration: 200, easing: cubicOut}}>
+				<Subtitles/>
 			</div>
+		{/if}
+		<div class="control" class:visible={seeControls} role="none" on:mouseleave={hideVolumeSlider}>
+			<TrackBar video={video}/>
+			<div class="menu">
+				<div class="container">
+					<PauseToggleButton bind:paused/>
+					<VolumeSlider bind:volume bind:expanded={seeVolumeSlider}/>
+					<Timestamp length={video.length} time={$player.time}/>
+				</div>
 
-			<div class="container">
-				<div class="item speed">
-					<Icon name="fast_forward" weight={300} size={30} color="var(--white-opaque)"/>
-				</div>
-				<div class="item subtitles" class:inactive={!seeSubtitles}
-					 on:click={() => seeSubtitles = !seeSubtitles} role="none">
-					<Icon name="match_case" size={32} color="var(--white-opaque)"/>
-				</div>
-				<div class="item expand" on:click={toggleFullscreen} role="none">
-					<Icon color="var(--white-opaque)"
-						  name={seeFullscreen ? "close_fullscreen" : "open_in_full"}/>
+				<div class="container">
+					<VelocityMenu bind:velocity/>
+					<SubtitleToggleButton bind:active={seeSubtitles}/>
+					<FullscreenToggleButton on:toggle={handleFullscreenToggle} bind:fullscreen={seeFullscreen}/>
 				</div>
 			</div>
 		</div>
@@ -148,6 +154,8 @@
 
 <style lang="scss">
 	.player {
+		user-select: none;
+		border: 1px solid rgba(255, 255, 255, 0);
 		overflow: hidden;
 		border-radius: 4px;
 		width: 100%;
@@ -155,92 +163,62 @@
 		background: var(--primary-dark);
 		position: relative;
 
-		.video {
-			height: 100%;
-			width: 100%;
-		}
-
 		&.clear {
 			cursor: none;
 		}
 
-		.thumb {
-			width: 100%;
+		.view {
+			background: #151a15;
 			height: 100%;
+			width: 100%;
 		}
 
-		.control {
-			display: flex;
-			flex-direction: column;
-			padding: 0 12px;
+		.inferior {
+			width: 100%;
 			position: absolute;
 			bottom: 0;
-			width: 100%;
-			background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 50%, transparent);
-			opacity: 0;
-			transition: opacity 400ms;
-			pointer-events: none;
 
-			&.visible {
-				pointer-events: all;
-				opacity: 1;
+			.subtitles {
+				width: 100%;
+
+				&.padded {
+					transform: translateY(-32px);
+				}
 			}
 
-			.menu {
-				height: 42px;
+			.control {
 				display: flex;
-				align-items: center;
-				justify-content: space-between;
+				flex-direction: column;
+				padding: 0 12px;
+				width: 100%;
+				background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 25%, transparent);
+				opacity: 0;
+				transition: opacity 400ms;
+				pointer-events: none;
+				height: 0;
 
-				> .container {
-					display: flex;
+
+				&.visible {
 					height: 100%;
+					pointer-events: all;
+					opacity: 1;
+				}
+
+				.menu {
+					height: 42px;
+					display: flex;
 					align-items: center;
+					justify-content: space-between;
 
-					.item {
-						cursor: pointer;
+					> .container {
 						display: flex;
-						align-items: center;
 						height: 100%;
-						padding: 0 8px;
-					}
-
-					.play {
-						padding: 0 8px 0 0;
-					}
-
-					.volume {
-						padding: 0 0 0 8px;
-					}
-
-					.time {
-						font-size: 1.3rem;
-						cursor: default;
-						display: flex;
 						align-items: center;
-						gap: 4px;
-
-						.container {
-							border: 1px solid var(--white-weaker);
-							padding: 1px 4px;
-							border-radius: 4px;
-
-							&.length {
-								backdrop-filter: none;
-								border: none;
-							}
-						}
-					}
-
-					.subtitles {
-						transition: 300ms;
-
-						&.inactive {
-							opacity: 0.2;
-						}
 					}
 				}
 			}
+
 		}
+
 	}
 </style>

@@ -28,6 +28,12 @@
 		flex-direction: column;
 		gap: 8px;
 
+		.title {
+			font-size: 1.6rem;
+			font-weight: 600;
+			color: var(--white-opaque);
+		}
+
 		.container {
 			overflow: hidden;
 			display: flex;
@@ -57,6 +63,7 @@
 				.title {
 					transition: 200ms;
 					font-size: 1.4rem;
+
 					margin-bottom: 8px;
 				}
 

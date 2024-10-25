@@ -3,17 +3,24 @@ import type {Part} from "$lib/types";
 
 export type PlayerState = {
     time: number;
-    part: Part;
+    parts:  {
+        info: Part;
+        watched: number;
+    }[]
 }
 
 const defaultState: PlayerState = {
     time: 0,
-    part: {
-        title: "",
-        start: 0,
-        end: 0,
-        id: ""
-    }
+    parts: [{
+        info: {
+            id: "",
+            title: "",
+            start: 0,
+            end: 0,
+        },
+
+        watched: 0
+    }]
 }
 
 export const player = writable<PlayerState>(defaultState);

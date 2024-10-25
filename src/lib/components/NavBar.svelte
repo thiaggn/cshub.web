@@ -31,7 +31,7 @@
 
 <div class="navbar" class:expanded>
 	{#if allowGoBack}
-		<div class="goback item" on:click={() => history.back()} role="none"
+		<div class="goback button" on:click={() => history.back()} role="none"
 			 transition:slide={ {duration: 500, easing: backOut, axis: "y"}}>
 			<div class="icon">
 				<Icon name="chevron_left" size={32}/>
@@ -44,7 +44,7 @@
 
 	{#each destinations as dest, i}
 		{@const active = $page.url.pathname === dest.to}
-		<a href={dest.to} class="dest item" class:active>
+		<a href={dest.to} class="dest button" class:active>
 			<div class="icon">
 				<Icon name={dest.icon}
 					  color="var(--primary)"
@@ -70,7 +70,7 @@
 		gap: 4px;
 
 
-		.item {
+		.button {
 			height: 45px;
 			display: flex;
 			width: 100%;
