@@ -10,7 +10,11 @@
 	export let data;
 
 	$: if(data.video) {
-		$player.part = data.video.parts[0]
+		$player.parts = data.video.parts.map(p => ({
+			info: p,
+			watched: 0,
+		}))
+
 		$player.time = 0;
 	}
 </script>
@@ -26,11 +30,11 @@
 
 			<div class="actions">
 				<div class="group">
-					<div class="item">
+					<div class="button">
 						<Icon name="download" color="var(--white-opaque)" weight={300}/>
 						<span>Download</span>
 					</div>
-					<div class="item">
+					<div class="button">
 						<Icon name="bookmark" color="var(--white-opaque)" weight={300}/>
 						<span>Favoritar</span>
 					</div>
@@ -99,7 +103,7 @@
 						border-radius: 8px;
 						overflow: hidden;
 
-						.item {
+						.button {
 							height: 100%;
 							padding: 0 8px;
 							gap: 4px;
@@ -154,8 +158,9 @@
 			gap: 16px;
 
 			.title {
-				font-size: 1.4rem;
+				font-size: 1.6rem;
 				font-weight: 600;
+				color: var(--white-opaque);
 			}
 		}
 	}
