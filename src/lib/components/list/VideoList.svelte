@@ -17,7 +17,7 @@
 						<span class="detail length">{formatTime(video.length)}</span>
 						{#if video.progress}
 							<div class="progress">
-								<div class="line" style:--progress={video.progress / video.length}></div>
+								<div class="part" style:--progress={video.progress / video.length}></div>
 							</div>
 						{/if}
 					</div>
@@ -83,7 +83,7 @@
 						height: 4px;
 						background: var(--black-opaque);
 
-						.line {
+						.part {
 							height: 100%;
 							width: calc(100% * var(--progress));
 							background: var(--primary);

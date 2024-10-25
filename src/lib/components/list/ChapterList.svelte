@@ -39,13 +39,12 @@
 		padding-bottom: 48px;
 		padding-right: 12px;
 
-
 		.chapter {
 			flex-shrink: 0;
 			display: flex;
 			align-items: center;
 			gap: 16px;
-			height: 48px;
+			height: 40px;
 			padding: 0 8px;
 			color: var(--white-opaque);
 			transition: color 200ms, border-bottom-color 200ms;

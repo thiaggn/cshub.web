@@ -5,14 +5,13 @@
 	export let video: Video;
 
 	function selectPart(p: Part) {
-		$player.part = p;
-		$player.time = p.start;
+
 	}
 </script>
 
 <div class="list">
 	{#each video.parts as part, i}
-		<div class="part" class:active={$player.part.id === part.id}
+		<div class="part" class:active={false}
 			 role="none" on:click={() => selectPart(part)}>
 			<div class="description">
 				<div class="title">{part.title}</div>
